@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdnjs.cloudflare.com https://unpkg.com 'unsafe-eval' 'unsafe-inline';">
+
+    <title>The CMO Challenge</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>The Budget Allocation Black Hole ⚫</h1>
+            <p class="subtitle">Try not to waste all the company's money. We're watching.</p>
+            <button id="about-btn"><i class="fa-solid fa-circle-info"></i> About This Thing</button>
+        </header>
+
+        <div class="dashboard">
+            <main class="simulator-panel">
+                <div class="mode-selector">
+                    <input type="radio" id="sandbox-mode-radio" name="mode" value="sandbox" checked>
+                    <label for="sandbox-mode-radio"><i class="fa-solid fa-cubes"></i> Sandbox</label>
+                    <input type="radio" id="challenge-mode-radio" name="mode" value="challenge">
+                    <label for="challenge-mode-radio"><i class="fa-solid fa-trophy"></i> Challenge</label>
+                </div>
+
+                <div id="simulator-section">
+                    <div class="controls">
+                        <h2><i class="fa-solid fa-sliders"></i> The Levers of Power</h2>
+                        <div class="control-group" data-tooltip="Changes the underlying adstock and saturation parameters to reflect different market dynamics.">
+                            <label for="scenario-select">Market Scenario</label>
+                            <select id="scenario-select">
+                                <option value="fast_decay">Fast-Moving Goods (e.g., Snacks, Soda)</option>
+                                <option value="slow_decay">High-Consideration Goods (e.g., Cars, Insurance)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group" data-tooltip="Set the total cash you have to play with for the campaign.">
+                            <label for="total-budget">Total Campaign Budget (4 Weeks): $<span id="total-budget-value">1000</span></label>
+                            <input type="range" id="total-budget" min="800" max="3200" value="1000" step="10">
+                        </div>
+                        <hr>
+                        <h3>Channel Allocation (<span id="allocation-total">100</span>%)</h3>
+                        <div class="control-group">
+                            <label for="tv-slider">📺 TV: <span id="tv-value">50</span>% (<span id="tv-spend-value">$500</span>)</label>
+                            <input type="range" id="tv-slider" min="0" max="100" value="50">
+                        </div>
+                        <div class="control-group">
+                            <label for="radio-slider">📻 Radio: <span id="radio-value">30</span>% (<span id="radio-spend-value">$300</span>)</label>
+                            <input type="range" id="radio-slider" min="0" max="100" value="30">
+                        </div>
+                        <div class="control-group">
+                            <label for="newspaper-slider">📰 Newspaper: <span id="newspaper-value">20</span>% (<span id="newspaper-spend-value">$200</span>)</label>
+                            <input type="range" id="newspaper-slider" min="0" max="100" value="20">
+                        </div>
+                    </div>
+                    <div class="results">
+                        <div class="result-display">
+                            <p data-tooltip="The total sales predicted for the entire 4-week campaign.">Predicted Total Campaign Sales:</p>
+                            <h2 id="sales-output">---</h2>
+                            <p class="weekly-average" data-tooltip="The average weekly sales, used for comparing against the challenge goal.">Average Weekly Sales: <span id="weekly-sales-output">---</span></p>
+                        </div>
+                        <button id="simulate-btn">See What Happens</button>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="analyst-panel">
+                <div class="analyst-header">
+                    <lottie-player
+                        id="analyst-avatar"
+                        src="https://lottie.host/bd8380e0-4f5f-4d90-b4a3-6b1666994fe3/2HbTkNAmMj.json"
+                        style="width: 150px;height: 150px"
+                        speed="1"
+                        autoplay
+                        loop
+                    ></lottie-player>
+                    <h3>The Analyst</h3>
+                </div>
+
+                <div id="analyst-sandbox-view" class="analyst-card">
+                    <h4><i class="fa-solid fa-vial"></i> You're in the Sandbox</h4>
+                    <p>This is your playground. No rules. Tweak the campaign budget and channel mix to your heart's content. See if you can find the sweet spot.</p>
+                </div>
+                
+                <div id="analyst-challenge-view" class="hidden">
+                    <button id="new-challenge-btn">Give Me a Challenge</button>
+                    <div id="challenge-display" class="analyst-card hidden">
+                        <h4><i class="fa-solid fa-bullhorn"></i> The Briefing</h4>
+                        <strong id="challenge-title"></strong>
+                        <p id="challenge-scenario"></p>
+                        <p id="challenge-constraint"></p>
+                        <p id="challenge-goal"></p>
+                    </div>
+                    <div id="feedback-display" class="analyst-card hidden">
+                        <h4><i class="fa-solid fa-comment-dots"></i> Performance Review</h4>
+                        <p id="feedback-text">Awaiting your results...</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+        
+        <div id="modal-overlay" class="hidden">
+            <div id="modal-content">
+                <span id="close-btn">&times;</span>
+                <h2>What's Going On Here?</h2>
+                <h4>The Model</h4>
+                <p>This simulator is powered by a <strong>Marketing Mix Model (MMM)</strong>. It's a regression model trained on historical sales and advertising data to learn the relationship between how much you spend and how much you sell. It also understands real-world effects like <strong>diminishing returns</strong> (the more you spend, the less effective each dollar becomes).</p>
+                <h4>The Game</h4>
+                <p>In <strong>Challenge Mode</strong>, our AI Analyst will give you a specific business scenario and a budget. Your job is to find the optimal marketing mix to meet the goal. The AI will then give you feedback on your performance, comparing your strategy to the mathematically best possible solution.</p>
+                <h4>In a Real-World Setting</h4>
+                <p>This tool is a simplified version of what marketing analytics teams use to make multi-million dollar decisions. In the real world, you would use more data (promotions, holidays, competitor spending), fine-tune the model parameters, and run complex budget optimizations.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Built by Khushaal Chaudhary | <a href="https://www.linkedin.com/in/khushaal-chaudhary/" target="_blank">Find me on LinkedIn</a></p>
+        </footer>
+        <script src="script.js"></script>
+    </body>
+    </html>
