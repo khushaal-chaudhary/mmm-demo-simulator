@@ -43,18 +43,36 @@ window.onload = function() {
 
     function setMode(mode) {
         if (mode === 'sandbox') {
+            // Show sandbox-specific elements
             analystSandboxView.classList.remove('hidden');
+            totalBudgetSlider.disabled = false;
+
+            // Hide ALL challenge-specific elements
             analystChallengeView.classList.add('hidden');
             challengeDisplay.classList.add('hidden');
             feedbackDisplay.classList.add('hidden');
-            totalBudgetSlider.disabled = false;
-            //analystAvatar.src = analystAvatars.thinking;
+            
+            // Set analyst state
             analystAvatar.load(analystAvatars.sandbox);
             analystAvatar.style.borderColor = 'var(--primary-color)';
+
+            // Set radio button and reset outputs
             sandboxRadio.checked = true;
-        } else {
+            salesOutput.textContent = '---';
+            weeklySalesOutput.textContent = '---';
+
+        } else { // Challenge mode
+            // Hide sandbox-specific elements
             analystSandboxView.classList.add('hidden');
+
+            // Show the main challenge container
             analystChallengeView.classList.remove('hidden');
+
+            // Set analyst state
+            analystAvatar.load(analystAvatars.thinking);
+            analystAvatar.style.borderColor = 'var(--primary-color)';
+
+            // Set radio button
             challengeRadio.checked = true;
         }
     }

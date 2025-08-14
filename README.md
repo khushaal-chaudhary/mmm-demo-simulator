@@ -34,7 +34,7 @@ Welcome to "The Budget Allocation Black Hole," a Marketing Mix Modeling (MMM) si
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/khushaal-chaudhary/mmm-demo-simulator.git
     cd mmm_simulator
     ```
 2.  **Backend Setup:**
