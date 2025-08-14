@@ -1,6 +1,6 @@
 // We wrap the entire script in window.onload
 window.onload = function() {
-    const API_URL = 'http://127.0.0.1:5000';
+    const API_URL = 'https://mmm-game-api.onrender.com';
 
     const analystAvatars = {
         sandbox: 'https://lottie.host/f838ed1e-c300-471a-8bc9-1cfd7ca37b65/GXxRI5HPqF.json',
