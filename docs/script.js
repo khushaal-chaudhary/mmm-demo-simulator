@@ -45,6 +45,8 @@ window.onload = function() {
         if (mode === 'sandbox') {
             analystSandboxView.classList.remove('hidden');
             analystChallengeView.classList.add('hidden');
+            challengeDisplay.classList.add('hidden');
+            feedbackDisplay.classList.add('hidden');
             totalBudgetSlider.disabled = false;
             //analystAvatar.src = analystAvatars.thinking;
             analystAvatar.load(analystAvatars.sandbox);
