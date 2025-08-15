@@ -38,8 +38,27 @@ window.onload = function() {
     const aboutBtn = document.getElementById('about-btn');
     const modalOverlay = document.getElementById('modal-overlay');
     const closeBtn = document.getElementById('close-btn');
+    const scenarioSelect = document.getElementById('scenario-select');
 
     let currentChallenge = null;
+
+    // --- Event Listener for Scenario Change ---
+    scenarioSelect.addEventListener('change', (event) => {
+        const selectedScenario = event.target.value;
+        fetch(`${API_URL}/switch-model`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ scenario: selectedScenario })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.message); // This will now appear in the browser console
+            // Reset the simulation view
+            salesOutput.textContent = '---';
+            weeklySalesOutput.textContent = '---';
+        })
+        .catch(error => console.error('Error switching model:', error));
+    });
 
     function setMode(mode) {
         if (mode === 'sandbox') {
