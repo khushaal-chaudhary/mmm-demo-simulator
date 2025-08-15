@@ -10,7 +10,7 @@
 }
 * { box-sizing: border-box; }
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystem-Font, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: var(--background-color);
     color: var(--text-primary);
     margin: 0;
@@ -35,7 +35,6 @@ header .subtitle { font-size: 1.2rem; color: var(--text-secondary); margin-top: 
 .result-display p { margin: 0; font-size: 1.2rem; }
 .result-display .weekly-average { margin-top: 15px; font-size: 1rem; color: var(--text-secondary); }
 #sales-output { font-size: 3rem; margin: 10px 0 0 0; color: var(--primary-color); }
-
 .analyst-panel {
     background-color: var(--surface-color);
     padding: 25px;
@@ -83,8 +82,26 @@ button:active { transform: scale(0.98); }
 button:disabled { background-color: var(--text-secondary); cursor: not-allowed; }
 #about-btn { background-color: var(--surface-color); color: var(--text-primary); }
 #about-btn:hover { background-color: #333; }
-#modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 100; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-#modal-overlay.visible { opacity: 1; visibility: visible; }
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+#modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    display: flex;
+}
 #modal-content { position: relative; padding: 30px 40px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 16px; max-width: 600px; }
 #close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; color: var(--text-secondary); cursor: pointer; }
 [data-tooltip] { position: relative; cursor: help; }
@@ -94,12 +111,17 @@ footer { text-align: center; padding: 20px; color: var(--text-secondary); font-s
 footer a { color: var(--primary-color); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
-/* ### THIS IS THE FIX ### */
-/* The old .hidden was being overridden by the grid display. */
-/* This new rule is more specific and will take priority. */
-.hidden, [id$='-view'].hidden {
+/* ### THIS IS THE FINAL FIX ### */
+.hidden {
     display: none !important;
 }
-/* ##################### */
+
+/* This rule is more specific than .hidden, so it will win */
+#modal-overlay.visible {
+    display: flex !important;
+    opacity: 1;
+    visibility: visible;
+}
+/* ########################### */
 
 h1 i, h2 i, h4 i, label i { margin-right: 10px; }
